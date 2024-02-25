@@ -1,15 +1,25 @@
-# Завдання 1
+# Домашне завдання по курсу React & TypeScript
 
-У вас є компонент React, який використовує useRef та IntersectionObserver для визначення, коли користувач переглядає кінець вмісту. Ваше завдання полягає в наступному:
+### goit-react-woolf-hw-05-typescript
 
-Встановіть правильні типи пропсів для цього компонента. У ньому є дві властивості: children і onContentEndVisible. children - це будь-який валідний React вузол, а onContentEndVisible - це функція без аргументів, що повертає void.
+## Завдання 1
 
-Встановіть правильний тип useRef. Посилання endContentRef використовується для div, який міститься в кінці вмісту.
+У вас є компонент React, який використовує useRef та IntersectionObserver для
+визначення, коли користувач переглядає кінець вмісту. Ваше завдання полягає в
+наступному:
+
+Встановіть правильні типи пропсів для цього компонента. У ньому є дві
+властивості: children і onContentEndVisible. children - це будь-який валідний
+React вузол, а onContentEndVisible - це функція без аргументів, що повертає
+void.
+
+Встановіть правильний тип useRef. Посилання endContentRef використовується для
+div, який міститься в кінці вмісту.
 
 Встановіть правильний тип для options (клас також може бути типом для options).
 
 ```ts
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
 
 // Опишіть Props
 export function Observer({ children, onContentEndVisible }: Props) {
@@ -19,13 +29,13 @@ export function Observer({ children, onContentEndVisible }: Props) {
   useEffect(() => {
     // Вкажіть правильний тип для options, підказка, клас також можна вказувати як тип
     const options = {
-      rootMargin: "0px",
+      rootMargin: '0px',
       threshold: 1.0,
       root: null,
     };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
         if (entry.intersectionRatio > 0) {
           onContentEndVisible();
           observer.disconnect();
@@ -51,36 +61,38 @@ export function Observer({ children, onContentEndVisible }: Props) {
 }
 ```
 
-# Завдання 2
+## Завдання 2
 
 Ваше завдання – додати типи для наступних елементів коду:
 
 RequestStep: Це рядковий літерал.
 
-State: Цей тип являє собою об'єкт з двома властивостями isRequestInProgress і RequestStep
+State: Цей тип являє собою об'єкт з двома властивостями isRequestInProgress і
+RequestStep
 
-Action: Це тип, що представляє можливі дії, які можуть бути відправлені до редюсера.
+Action: Це тип, що представляє можливі дії, які можуть бути відправлені до
+редюсера.
 
 Дивіться код і опишіть для нього правильні типи.
 
 ```ts
-import React, { useReducer } from "react";
+import React, { useReducer } from 'react';
 
 const initialState: State = {
   isRequestInProgress: false,
-  requestStep: "idle",
+  requestStep: 'idle',
 };
 
 function requestReducer(state: State, action: Action): State {
   switch (action.type) {
-    case "START_REQUEST":
-      return { ...state, isRequestInProgress: true, requestStep: "start" };
-    case "PENDING_REQUEST":
-      return { ...state, isRequestInProgress: true, requestStep: "pending" };
-    case "FINISH_REQUEST":
-      return { ...state, isRequestInProgress: false, requestStep: "finished" };
-    case "RESET_REQUEST":
-      return { ...state, isRequestInProgress: false, requestStep: "idle" };
+    case 'START_REQUEST':
+      return { ...state, isRequestInProgress: true, requestStep: 'start' };
+    case 'PENDING_REQUEST':
+      return { ...state, isRequestInProgress: true, requestStep: 'pending' };
+    case 'FINISH_REQUEST':
+      return { ...state, isRequestInProgress: false, requestStep: 'finished' };
+    case 'RESET_REQUEST':
+      return { ...state, isRequestInProgress: false, requestStep: 'idle' };
     default:
       return state;
   }
@@ -89,23 +101,23 @@ function requestReducer(state: State, action: Action): State {
 export function RequestComponent() {
   const [requestState, requestDispatch] = useReducer(
     requestReducer,
-    initialState
+    initialState,
   );
 
   const startRequest = () => {
-    requestDispatch({ type: "START_REQUEST" });
+    requestDispatch({ type: 'START_REQUEST' });
     // Імітуємо запит до сервера
     setTimeout(() => {
-      requestDispatch({ type: "PENDING_REQUEST" });
+      requestDispatch({ type: 'PENDING_REQUEST' });
       // Імітуємо отримання відповіді від сервера
       setTimeout(() => {
-        requestDispatch({ type: "FINISH_REQUEST" });
+        requestDispatch({ type: 'FINISH_REQUEST' });
       }, 2000);
     }, 2000);
   };
 
   const resetRequest = () => {
-    requestDispatch({ type: "RESET_REQUEST" });
+    requestDispatch({ type: 'RESET_REQUEST' });
   };
 
   return (
@@ -120,17 +132,19 @@ export function RequestComponent() {
 export default RequestComponent;
 ```
 
-# Завдання 3
+## Завдання 3
 
-Ви створюєте компонент форми у React. Ви маєте поле введення, в якому ви хочете відстежити зміни. Для цього ви використовуєте обробник подій onChange. Ваше завдання – правильно типізувати подію, яка передається у цю функцію.
+Ви створюєте компонент форми у React. Ви маєте поле введення, в якому ви хочете
+відстежити зміни. Для цього ви використовуєте обробник подій onChange. Ваше
+завдання – правильно типізувати подію, яка передається у цю функцію.
 
 ```ts
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 export function FormComponent() {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     setValue(event.target.value);
   };
 
@@ -138,7 +152,7 @@ export function FormComponent() {
 }
 ```
 
-# Завдання 4
+## Завдання 4
 
 Ви вирішили застосувати до меню контекст і тепер вам потрібно його типізувати.
 
@@ -146,8 +160,103 @@ export function FormComponent() {
 
 Описати тип MenuSelected: Цей тип є об'єктом, що містить selectedMenu
 
-Описати тип MenuAction: Цей тип являє собою об'єкт з методом onSelectedMenu, який приймає об'єкт типу SelectedMenu як аргумент повертає void.
+Описати тип MenuAction: Цей тип являє собою об'єкт з методом onSelectedMenu,
+який приймає об'єкт типу SelectedMenu як аргумент повертає void.
 
 Описати тип PropsProvider: Опишіть правильний тип для дітей
 
 Описати тип PropsMenu: Опишіть тип для menus, він має бути від типу Menu
+
+```ts
+import React, { createContext, useMemo, useState, useContext } from 'react';
+import noop from 'lodash/noop';
+
+type MenuIds = 'first' | 'second' | 'last';
+type Menu = { id: MenuIds; title: string };
+
+// Додати тип Menu Selected
+
+const MenuSelectedContext = createContext<MenuSelected>({
+  selectedMenu: {},
+});
+
+// Додайте тип MenuAction
+
+const MenuActionContext = createContext<MenuAction>({
+  onSelectedMenu: noop,
+});
+
+type PropsProvider = {
+  children; // Додати тип для children
+};
+
+function MenuProvider({ children }: PropsProvider) {
+  // Додати тип для SelectedMenu він повинен містити { id }
+  const [selectedMenu, setSelectedMenu] = useState<SelectedMenu>({});
+
+  const menuContextAction = useMemo(
+    () => ({
+      onSelectedMenu: setSelectedMenu,
+    }),
+    [],
+  );
+
+  const menuContextSelected = useMemo(
+    () => ({
+      selectedMenu,
+    }),
+    [selectedMenu],
+  );
+
+  return (
+    <MenuActionContext.Provider value={menuContextAction}>
+      <MenuSelectedContext.Provider value={menuContextSelected}>
+        {children}
+      </MenuSelectedContext.Provider>
+    </MenuActionContext.Provider>
+  );
+}
+
+type PropsMenu = {
+  menus; // Додайте вірний тип для меню
+};
+
+function MenuComponent({ menus }: PropsMenu) {
+  const { onSelectedMenu } = useContext(MenuActionContext);
+  const { selectedMenu } = useContext(MenuSelectedContext);
+
+  return (
+    <>
+      {menus.map(menu => (
+        <div key={menu.id} onClick={() => onSelectedMenu({ id: menu.id })}>
+          {menu.title}{' '}
+          {selectedMenu.id === menu.id ? 'Selected' : 'Not selected'}
+        </div>
+      ))}
+    </>
+  );
+}
+
+export function ComponentApp() {
+  const menus: Menu[] = [
+    {
+      id: 'first',
+      title: 'first',
+    },
+    {
+      id: 'second',
+      title: 'second',
+    },
+    {
+      id: 'last',
+      title: 'last',
+    },
+  ];
+
+  return (
+    <MenuProvider>
+      <MenuComponent menus={menus} />
+    </MenuProvider>
+  );
+}
+```
